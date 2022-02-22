@@ -1,5 +1,3 @@
-use std::array::IntoIter;
-
 use crate::{prelude::*, tile::GPUAnimated};
 use bevy::{
     math::Vec2,
@@ -56,46 +54,52 @@ impl ChunkMesher {
                             (tile.texture_index as i32, tile.texture_index as i32, 0.0)
                         };
 
-                    positions.extend(IntoIter::new([
-                        // X, Y
-                        [tile_pos.x, tile_pos.y, animation_speed],
-                        // X, Y + 1
-                        //[tile_pos.x, tile_pos.y + 1.0, animation_speed],
-                        [tile_pos.x, tile_pos.y, animation_speed],
-                        // X + 1, Y + 1
-                        //[tile_pos.x + 1.0, tile_pos.y + 1.0, animation_speed],
-                        [tile_pos.x, tile_pos.y, animation_speed],
-                        // X + 1, Y
-                        //[tile_pos.x + 1.0, tile_pos.y, animation_speed],
-                        [tile_pos.x, tile_pos.y, animation_speed],
-                    ]));
+                    positions.extend(
+                        [
+                            // X, Y
+                            [tile_pos.x, tile_pos.y, animation_speed],
+                            // X, Y + 1
+                            //[tile_pos.x, tile_pos.y + 1.0, animation_speed],
+                            [tile_pos.x, tile_pos.y, animation_speed],
+                            // X + 1, Y + 1
+                            //[tile_pos.x + 1.0, tile_pos.y + 1.0, animation_speed],
+                            [tile_pos.x, tile_pos.y, animation_speed],
+                            // X + 1, Y
+                            //[tile_pos.x + 1.0, tile_pos.y, animation_speed],
+                            [tile_pos.x, tile_pos.y, animation_speed],
+                        ]
+                        .into_iter(),
+                    );
 
-                    colors.extend(IntoIter::new([
+                    colors.extend(
                         [
-                            tile.color.r(),
-                            tile.color.g(),
-                            tile.color.b(),
-                            tile.color.a(),
-                        ],
-                        [
-                            tile.color.r(),
-                            tile.color.g(),
-                            tile.color.b(),
-                            tile.color.a(),
-                        ],
-                        [
-                            tile.color.r(),
-                            tile.color.g(),
-                            tile.color.b(),
-                            tile.color.a(),
-                        ],
-                        [
-                            tile.color.r(),
-                            tile.color.g(),
-                            tile.color.b(),
-                            tile.color.a(),
-                        ],
-                    ]));
+                            [
+                                tile.color.r(),
+                                tile.color.g(),
+                                tile.color.b(),
+                                tile.color.a(),
+                            ],
+                            [
+                                tile.color.r(),
+                                tile.color.g(),
+                                tile.color.b(),
+                                tile.color.a(),
+                            ],
+                            [
+                                tile.color.r(),
+                                tile.color.g(),
+                                tile.color.b(),
+                                tile.color.a(),
+                            ],
+                            [
+                                tile.color.r(),
+                                tile.color.g(),
+                                tile.color.b(),
+                                tile.color.a(),
+                            ],
+                        ]
+                        .into_iter(),
+                    );
 
                     // flipping and rotation packed in bits
                     // bit 0 : flip_x
@@ -105,32 +109,35 @@ impl ChunkMesher {
                     let tile_flip_bits =
                         tile.flip_x as i32 | (tile.flip_y as i32) << 1 | (tile.flip_d as i32) << 2;
 
-                    textures.extend(IntoIter::new([
+                    textures.extend(
                         [
-                            tile.texture_index as i32,
-                            tile_flip_bits,
-                            animation_start,
-                            animation_end,
-                        ],
-                        [
-                            tile.texture_index as i32,
-                            tile_flip_bits,
-                            animation_start,
-                            animation_end,
-                        ],
-                        [
-                            tile.texture_index as i32,
-                            tile_flip_bits,
-                            animation_start,
-                            animation_end,
-                        ],
-                        [
-                            tile.texture_index as i32,
-                            tile_flip_bits,
-                            animation_start,
-                            animation_end,
-                        ],
-                    ]));
+                            [
+                                tile.texture_index as i32,
+                                tile_flip_bits,
+                                animation_start,
+                                animation_end,
+                            ],
+                            [
+                                tile.texture_index as i32,
+                                tile_flip_bits,
+                                animation_start,
+                                animation_end,
+                            ],
+                            [
+                                tile.texture_index as i32,
+                                tile_flip_bits,
+                                animation_start,
+                                animation_end,
+                            ],
+                            [
+                                tile.texture_index as i32,
+                                tile_flip_bits,
+                                animation_start,
+                                animation_end,
+                            ],
+                        ]
+                        .into_iter(),
+                    );
 
                     indices.extend_from_slice(&[i + 0, i + 2, i + 1, i + 0, i + 3, i + 2]);
                     i += 4;
