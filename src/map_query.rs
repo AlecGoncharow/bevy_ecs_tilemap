@@ -174,6 +174,12 @@ impl<'w, 's> MapQuery<'w, 's> {
         {
             if let Some(layer_entity) = map.get_layer_entity(layer_id) {
                 if let Ok((_, layer)) = self.layer_query_set.q1().get(*layer_entity) {
+                    let max_x = layer.settings.chunk_size.0 * layer.settings.map_size.0;
+                    let max_y = layer.settings.chunk_size.1 * layer.settings.map_size.1;
+                    if tile_pos.0 >= max_x as u32 || tile_pos.1 >= max_y as u32 {
+                        return Err(MapTileError::OutOfBounds(tile_pos));
+                    }
+
                     let chunk_pos = ChunkPos(
                         tile_pos.0 / layer.settings.chunk_size.0,
                         tile_pos.1 / layer.settings.chunk_size.1,
